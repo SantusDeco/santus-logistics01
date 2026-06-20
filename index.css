@@ -1,0 +1,492 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+    }
+    
+    body{
+    background:#0b0f1a;
+    color:white;
+    overflow-x:hidden;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    }
+    
+  /* ===== NAVBAR PREMIUM FIX ===== */
+#navbar{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px 25px;
+background:rgba(15,23,42,0.85);
+backdrop-filter:blur(12px);
+z-index:1000;
+}
+
+/* LOGO */
+#navbar img{
+width:120px;
+height:auto;
+}
+
+/* LINKS */
+#navbar ul{
+display:flex;
+gap:20px;
+align-items:center;
+}
+
+#navbar li{
+list-style:none;
+}
+
+#navbar a{
+position:relative;
+color:white;
+text-decoration:none;
+font-size:14px;
+transition:0.3s;
+}
+
+/* PREMIUM HOVER LINE */
+#navbar a::after{
+content:"";
+position:absolute;
+left:0;
+bottom:-5px;
+width:0%;
+height:2px;
+background:#00ffcc;
+transition:0.3s;
+}
+
+#navbar a:hover::after{
+width:100%;
+}
+
+/* MOBILE MENU BUTTON (we will use JS later) */
+.menu-toggle{
+display:none;
+font-size:28px;
+cursor:pointer;
+color:white;
+}
+
+/* MOBILE VIEW */
+@media(max-width:900px){
+#navbar ul{
+display:none;
+position:absolute;
+top:60px;
+left:0;
+width:100%;
+flex-direction:column;
+background:#0f172a;
+padding:20px;
+}
+
+#navbar.active ul{
+display:flex;
+}
+
+.menu-toggle{
+display:block;
+}
+}
+.butt {
+    padding: 10px 20px;
+    border: none;
+    background: orange;
+    color: white;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.butt:hover {
+    transform: scale(1.1);
+    background: #ff6600;
+}
+.move-car-container {
+    position: relative;
+    overflow: hidden;
+    height: 120px;
+}
+
+.move-car-container{
+position:relative;
+width:100%;
+height:120px;
+overflow:hidden;
+margin:40px 0;
+}
+
+#myDIV{
+position:absolute;
+width:180px;
+animation:driveCar 8s linear infinite;
+}
+
+@keyframes driveCar{
+0%{
+left:-200px;
+transform:scaleX(1);
+}
+49%{
+transform:scaleX(1);
+}
+50%{
+transform:scaleX(-1);
+}
+100%{
+left:100%;
+transform:scaleX(-1);
+}
+}
+
+@keyframes drive {
+    0% { left: -150px; }
+    100% { left: 100%; }
+}
+@media (max-width: 900px) {
+    .nav-links,
+    .nav-search {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    #navbar.active .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: #1f2a44;
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+    #navbar li{
+    list-style:none;
+    display:inline-block;
+    margin:0 10px;
+    }
+    
+    #navbar a{
+    color:white;
+    text-decoration:none;
+    transition:0.3s;
+    font-size:15px;
+    }
+    
+    #navbar a:hover{
+    color:#00ffcc;
+    transform:translateY(-2px);
+    }
+    
+    /* HERO */
+    .firstContainer{
+    min-height:100vh;
+    width:100%;
+    background:url('Logistics\ land\ page.jpg') center/cover no-repeat;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+    position:relative;
+    }
+    
+    .firstContainer::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    }
+    
+    .subject,
+    .subject-2,
+    .button{
+    position:relative;
+    z-index:2;
+    }
+    
+    .subject{
+    font-size:clamp(28px,5vw,55px);
+    color:#fdfdfc;
+    font-weight:400;
+    }
+    
+    .subject-2{
+    font-size:20px;
+    color:#fff;
+    margin-top:15px;
+    }
+    
+    .button{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+    flex-wrap:wrap;
+    }
+    
+    /* BUTTONS */
+    .butt{
+    padding:12px 25px;
+    border:none;
+    border-radius:30px;
+    background:#00ffcc;
+    color:#000;
+    cursor:pointer;
+    transition:0.3s;
+    font-weight:bold;
+    }
+    
+    .butt:hover{
+    transform:scale(1.1);
+    box-shadow:0 0 20px #00ffcc;
+    }
+    
+    /* CAR ANIMATION */
+    .move-car-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    padding:30px;
+    }
+    
+    #myDIV{
+    width:200px;
+    transition:0.5s;
+    }
+    
+    /* STATS */
+    .second-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:50px 20px;
+    background:#111827;
+    }
+    
+    .second-container div{
+    background:rgba(255,255,255,0.05);
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    transition:0.3s;
+    border:1px solid rgba(255,255,255,0.1);
+    }
+    
+    .second-container div:hover{
+    transform:translateY(-10px);
+    box-shadow:0 10px 30px rgba(0,255,204,0.2);
+    }
+    
+    /* ICONS */
+    .bi{
+    font-size:40px;
+    color:#00ffcc;
+    }
+    
+    /* THIRD SECTION */
+    .third-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:30px;
+    padding:60px 20px;
+    align-items:center;
+    justify-content:center;
+    }
+    
+    .logistics{
+    flex:1;
+    min-width:300px;
+    }
+    
+    .third-container h1{
+    color:#ffb703;
+    font-size:40px;
+    margin-bottom:20px;
+    }
+    
+    /* GRID SYSTEM */
+    .grid-container,
+    .second-grid-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    padding:20px;
+    }
+    
+    .grid-item img{
+    width:100%;
+    height:250px;
+    object-fit:cover;
+    border-radius:10px;
+    transition:0.3s;
+    }
+    
+    .grid-item img:hover{
+    transform:scale(1.05);
+    }
+    
+    /* FLEX SECTION */
+    .flexible-container{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    padding:40px 20px;
+    }
+    
+    .first-colum{
+    flex:1;
+    min-width:300px;
+    }
+    
+    /* OVERVIEW */
+    .overview{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    padding:50px 20px;
+    }
+    
+    .overview-container div{
+    background:rgba(255,255,255,0.05);
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:10px;
+    transition:0.3s;
+    }
+    
+    .overview-container div:hover{
+    background:#ffb703;
+    color:black;
+    }
+    
+    /* CONNECT */
+    .connect{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
+    padding:40px 20px;
+    }
+    
+    .connect div{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    transition:0.3s;
+    }
+    
+    .connect div:hover{
+    background:#00ffcc;
+    transform:scale(1.05);
+    }
+    
+    /* COMMENTS */
+    .comments{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:50px 20px;
+    }
+    
+    .comments div{
+    background:#9fb1ca;
+    padding:20px;
+    border-radius:15px;
+    transition:0.3s;
+    }
+    
+    .comments div:hover{
+    transform:translateY(-10px);
+    background:#ffb703;
+    color:black;
+    }
+    
+    /* NEWSLETTER */
+    .newsletter{
+    padding:40px;
+    text-align:center;
+    background:linear-gradient(45deg,#ffb703,#00ffcc);
+    color:black;
+    }
+    
+    /* FOOTER */
+    .end-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    background:#0f172a;
+    padding:40px 20px;
+    gap:20px;
+    }
+    
+    .lastIcons{
+    font-size:25px;
+    padding:10px;
+    background:#00ffcc;
+    border-radius:50%;
+    color:black;
+    }
+
+    /* GLOBAL SMOOTH EFFECTS */
+html{
+scroll-behavior:smooth;
+}
+
+/* SECTION FADE FEEL */
+.second-container div,
+.comments div,
+.grid-item img{
+transition:0.4s ease;
+}
+
+/* IMAGE HOVER PREMIUM */
+.grid-item img:hover{
+transform:scale(1.08);
+filter:brightness(1.1);
+box-shadow:0 10px 25px rgba(0,255,204,0.2);
+}
+
+/* BUTTON POLISH */
+.butt{
+box-shadow:0 0 0 transparent;
+}
+
+.butt:hover{
+letter-spacing:1px;
+}
+    
+    /* MOBILE FIX */
+    @media (max-width:768px){
+    #navbar{
+    flex-direction:column;
+    gap:10px;
+    }
+    
+    .subject{
+    font-size:30px;
+    }
+    
+    .third-container{
+    flex-direction:column;
+    }
+    
+    .firstContainer{
+    padding:100px 20px;
+    }
+    }

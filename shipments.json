@@ -1,0 +1,45 @@
+[
+  {
+    "id": "ST1001",
+    "status": "In Transit",
+    "location": "Lagos",
+    "eta": "2 Days",
+    "history": [
+      "Order Confirmed",
+      "Warehouse Processing",
+      "In Transit"
+    ]
+  },
+  {
+    "id": "ST8370",
+    "status": "In Transit",
+    "location": "Lagos",
+    "eta": "5 Days"
+  },
+  {
+    "id": "ST3866",
+    "status": "Custom Clearance",
+    "location": "lagos",
+    "eta": "48 days",
+    "history": [
+      "Warehouse Processing",
+      "In Transit",
+      "Custom Clearance"
+    ]
+  },
+  {
+    "id": "ST1202",
+    "customerName": "ghhguh",
+    "customerPhone": "ghghio",
+    "receiverName": "ghiuyhio",
+    "receiverPhone": "hgugh",
+    "origin": "hgggug",
+    "destination": "",
+    "status": "Delivered",
+    "location": "lagos",
+    "eta": "488 days",
+    "history": [
+      "Order Confirmed"
+    ]
+  }
+]

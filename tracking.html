@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Santus Logistics | Global Tracking</title>
+
+<link rel="stylesheet" href="tracking.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+
+</head>
+<body>
+
+<!-- =========================
+     PREMIUM NAVBAR
+========================= -->
+<nav class="navbar">
+
+<div class="logo-section">
+<img src="SAntus Logo.jpeg" alt="logo">
+<h2>Santus Logistics</h2>
+</div>
+
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="serivce.html">Services</a></li>
+<li><a href="tracking.html" class="active">Tracking</a></li>
+<li><a href="contact.html">Contact</a></li>
+</ul>
+
+<div class="menu-toggle" id="menuToggle">
+<i class="bi bi-list"></i>
+</div>
+
+</nav>
+
+<!-- =========================
+     HERO SECTION
+========================= -->
+<section class="hero">
+
+<div class="hero-overlay"></div>
+
+<div class="hero-content">
+
+<h1>
+Track Shipments Across The World
+</h1>
+
+<p>
+Enterprise logistics technology for secure, fast and real-time cargo tracking.
+</p>
+
+<div class="hero-stats">
+
+<div class="stat-card">
+<h2>120K+</h2>
+<p>Shipments</p>
+</div>
+
+<div class="stat-card">
+<h2>85+</h2>
+<p>Countries</p>
+</div>
+
+<div class="stat-card">
+<h2>24/7</h2>
+<p>Monitoring</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+     TRACKING PANEL
+========================= -->
+<section class="tracking-section">
+
+<div class="tracking-container">
+
+<div class="tracking-left">
+
+<div class="glass-card tracking-card">
+
+<h2>
+<i class="bi bi-globe2"></i>
+ Shipment Tracking
+</h2>
+
+<p class="tracking-text">
+Enter your tracking ID to monitor your shipment status globally.
+</p>
+
+<div class="track-input-group">
+
+<input
+id="trackingInput"
+type="text"
+placeholder="Enter Tracking ID"
+>
+
+<button onclick="trackShipment()">
+<i class="bi bi-search"></i>
+Track Shipment
+</button>
+
+</div>
+
+<div id="loading" class="loading hidden">
+<div class="spinner"></div>
+<p>Connecting to Santus Global Network...</p>
+</div>
+
+<div id="trackingResult"></div>
+
+</div>
+
+<!-- =========================
+     TIMELINE
+========================= -->
+<div class="glass-card timeline-card">
+
+<h2>
+<i class="bi bi-truck"></i>
+ Delivery Timeline
+</h2>
+
+<div class="timeline">
+
+<div class="timeline-step" id="step1">
+<div class="step-icon">
+<i class="bi bi-check-circle-fill"></i>
+</div>
+<p>Order Confirmed</p>
+</div>
+
+<div class="timeline-step" id="step2">
+<div class="step-icon">
+<i class="bi bi-box-seam"></i>
+</div>
+<p>Warehouse Processing</p>
+</div>
+
+<div class="timeline-step" id="step3">
+<div class="step-icon">
+<i class="bi bi-truck"></i>
+</div>
+<p>In Transit</p>
+</div>
+
+<div class="timeline-step" id="step4">
+<div class="step-icon">
+<i class="bi bi-globe"></i>
+</div>
+<p>Custom Clearance</p>
+</div>
+
+<div class="timeline-step" id="step5">
+<div class="step-icon">
+<i class="bi bi-house-check-fill"></i>
+</div>
+<p>Delivered</p>
+</div>
+
+</div>
+
+<div class="truck-container">
+<div class="road"></div>
+<div class="truck" id="truck">🚚</div>
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================
+     RIGHT DASHBOARD
+========================= -->
+<div class="tracking-right">
+
+<div class="glass-card dashboard-card">
+
+<h2>
+<i class="bi bi-bar-chart-fill"></i>
+ Logistics Dashboard
+</h2>
+
+<div class="dashboard-grid">
+
+<div class="dashboard-box">
+<i class="bi bi-airplane-fill"></i>
+<h3>Air Freight</h3>
+<p>Fast worldwide shipping operations.</p>
+</div>
+
+<div class="dashboard-box">
+<i class="bi bi-truck-front-fill"></i>
+<h3>Ground Delivery</h3>
+<p>Reliable cross-border transport systems.</p>
+</div>
+
+<div class="dashboard-box">
+<i class="bi bi-ship"></i>
+<h3>Ocean Cargo</h3>
+<p>Global maritime freight solutions.</p>
+</div>
+
+<div class="dashboard-box">
+<i class="bi bi-shield-check"></i>
+<h3>Secure Delivery</h3>
+<p>Protected enterprise shipment security.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="glass-card world-card">
+
+<h2>
+<i class="bi bi-globe-americas"></i>
+ Global Network
+</h2>
+
+<div class="pulse-map">
+<div class="pulse pulse1"></div>
+<div class="pulse pulse2"></div>
+<div class="pulse pulse3"></div>
+</div>
+
+<p>
+Live intelligent logistics infrastructure connected across multiple countries.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- =========================
+     FOOTER
+========================= -->
+<footer class="footer">
+
+<div>
+<h2>Santus Logistics</h2>
+<p>
+Enterprise-grade logistics and shipment management solutions.
+</p>
+</div>
+
+<div>
+<h3>Services</h3>
+<p>Air Freight</p>
+<p>Ocean Cargo</p>
+<p>Tracking</p>
+</div>
+
+<div>
+<h3>Contact</h3>
+<p>Lagos, Nigeria</p>
+<p>support@santuslogistics.com</p>
+</div>
+
+</footer>
+
+<script src="tracking.js"></script>
+
+</body>
+</html>

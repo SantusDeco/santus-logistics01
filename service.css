@@ -1,0 +1,64 @@
+/* ===== SERVICE HEADER ===== */
+.service-bar{
+margin-top:100px;
+background-color: rgb(247, 242, 242);
+padding:17px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+color:rgb(255, 136, 0);
+font-weight:bold;
+}
+
+/* ===== PROGRESS BAR FIX ===== */
+.pro{
+background:linear-gradient(90deg,#00ffcc,#ffb703);
+}
+
+/* ===== SECTION LAYOUT (FIXED RESPONSIVE) ===== */
+section{
+display:flex;
+flex-wrap:wrap;   /* IMPORTANT FIX */
+justify-content:center;
+align-items:flex-start;
+gap:40px;
+padding:40px 20px;
+}
+
+/* section content boxes */
+section div{
+flex:1;
+min-width:300px;
+}
+
+/* TEXT FIX (REMOVE 500px ISSUE) */
+section div p{
+width:100%;
+max-width:600px;
+font-size:18px;   /* FIXED (30px was too big) */
+line-height:1.6;
+}
+
+/* ===== BOOTSTRAP CONTAINER FIX ===== */
+.container{
+padding:20px;
+max-width:600px;
+}
+
+.container div{
+width:100%;
+margin:10px 0;
+}
+
+/* ===== MOBILE RESPONSIVE FIX ===== */
+@media(max-width:768px){
+section{
+flex-direction:column;
+text-align:center;
+}
+
+section div p{
+font-size:16px;
+}
+}
