@@ -45,7 +45,7 @@ async function trackShipment() {
 
         const response =
         await fetch(
-        `http://localhost:3000/track/${trackingId}`
+        `https://santus-logistics01.onrender.com/track/${trackingId}`
         );
 
         if (!response.ok) {
