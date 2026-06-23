@@ -1,28 +1,36 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
-const fs = require("fs");
+const mongoose = require("mongoose");
+
+const Shipment = require("./Shipment");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(__dirname));
 
-const FILE = "./shipments.json";
+mongoose.connect(process.env.MONGO_URI)
+.then(() => {
+    console.log("MongoDB Connected");
+})
+.catch(err => {
+    console.log(err);
+});
 
 /* GET ALL SHIPMENTS */
-app.get("/shipments", (req, res) => {
-  const data = JSON.parse(fs.readFileSync(FILE));
-  res.json(data);
+app.get("/shipments", async (req, res) => {
+  const shipments = await Shipment.find();
+  res.json(shipments);
 });
 
 /* TRACK SHIPMENT */
-app.get("/track/:id", (req, res) => {
-  const data = JSON.parse(fs.readFileSync(FILE));
+app.get("/track/:id", async (req, res) => {
 
-  const shipment = data.find(
-    item => item.id === req.params.id
-  );
+  const shipment = await Shipment.findOne({
+    id: req.params.id
+  });
 
   if (!shipment) {
     return res.status(404).json({
@@ -32,78 +40,60 @@ app.get("/track/:id", (req, res) => {
 
   res.json(shipment);
 });
-
 /* CREATE SHIPMENT */
-app.post("/create-shipment", (req, res) => {
-  const data = JSON.parse(fs.readFileSync(FILE));
+app.post("/create-shipment", async (req, res) => {
 
-  data.push(req.body);
+  const shipment =
+  new Shipment(req.body);
 
-  fs.writeFileSync(
-    FILE,
-    JSON.stringify(data, null, 2)
-  );
+  await shipment.save();
 
   res.json({
     message: "Shipment Created"
   });
+
 });
-
 /* DELETE SHIPMENT */
-app.delete("/delete-shipment/:id", (req, res) => {
+app.delete("/delete-shipment/:id", async (req, res) => {
 
-  let data = JSON.parse(
-    fs.readFileSync(FILE)
-  );
-
-  data = data.filter(
-    item => item.id !== req.params.id
-  );
-
-  fs.writeFileSync(
-    FILE,
-    JSON.stringify(data, null, 2)
-  );
+  await Shipment.deleteOne({
+    id: req.params.id
+  });
 
   res.json({
     message: "Shipment Deleted"
   });
+
 });
-
 /* UPDATE SHIPMENT */
-app.put("/update-shipment/:id", (req, res) => {
+app.put("/update-shipment/:id", async (req, res) => {
 
-    let data = JSON.parse(
-        fs.readFileSync(FILE)
-    );
+  const shipment =
+  await Shipment.findOneAndUpdate(
+    { id: req.params.id },
+    req.body,
+    { new: true }
+  );
 
-    const index = data.findIndex(
-        item => item.id === req.params.id
-    );
+  if (!shipment) {
 
-    if(index === -1){
-
-        return res.status(404).json({
-            message:"Shipment Not Found"
-        });
-
-    }
-
-    data[index] = req.body;
-
-    fs.writeFileSync(
-        FILE,
-        JSON.stringify(data,null,2)
-    );
-
-    res.json({
-        message:"Shipment Updated"
+    return res.status(404).json({
+      message: "Shipment Not Found"
     });
 
+  }
+
+  res.json({
+    message: "Shipment Updated"
+  });
+
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT =
+process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(
+    `Server running on port ${PORT}`
+  );
 });
