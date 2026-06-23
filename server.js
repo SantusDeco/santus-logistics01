@@ -4,7 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 
-const Shipment = require("./Shipment");
+const Shipment = require("./Shipment.js");
 
 const app = express();
 
@@ -97,3 +97,6 @@ app.listen(PORT, () => {
     `Server running on port ${PORT}`
   );
 });
+
+console.log("Shipment model loading...");
+const Shipment = require("./Shipment.js");
