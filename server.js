@@ -96,7 +96,7 @@ app.put("/update-shipment/:id", async (req, res) => {
 
 });
 
-const Admin = require("./AdminModel");
+
 
 /* ADMIN LOGIN */
 app.post("/admin-login", async (req, res) => {
