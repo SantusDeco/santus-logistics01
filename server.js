@@ -98,5 +98,3 @@ app.listen(PORT, () => {
   );
 });
 
-console.log("Shipment model loading...");
-const Shipment = require("./Shipment.js");
