@@ -104,32 +104,24 @@ app.post("/admin-login", async (req, res) => {
     const { username, password } = req.body;
 
     const admin = await Admin.findOne({
-        username
+        username,
+        password
     });
 
-    if (!admin) {
-        return res.json({
-            success: false
-        });
-    }
+    if(admin){
 
-    const match =
-    await bcrypt.compare(
-        password,
-        admin.password
-    );
-
-    if (!match) {
         return res.json({
-            success: false
+            success: true
         });
+
     }
 
     res.json({
-        success: true
+        success: false
     });
 
 });
+
 const PORT =
 process.env.PORT || 3000;
 
