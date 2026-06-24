@@ -11,6 +11,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(express.static(__dirname));
+
 mongoose.connect(process.env.MONGO_URI)
 .then(() => {
     console.log("MongoDB Connected");
@@ -130,6 +132,10 @@ app.post("/admin-login", async (req, res) => {
 });
 const PORT =
 process.env.PORT || 3000;
+
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+});
 
 app.listen(PORT, () => {
   console.log(
