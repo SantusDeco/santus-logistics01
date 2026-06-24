@@ -1,3 +1,10 @@
+if(
+localStorage.getItem("adminLoggedIn")
+!== "true"
+){
+window.location.href = "login.html";
+}
+
 const API =
 "https://santus-logistics01.onrender.com";
 
@@ -381,4 +388,15 @@ async function searchShipment() {
     );
 
     renderShipments(filtered);
+}
+
+function logout(){
+
+localStorage.removeItem(
+"adminLoggedIn"
+);
+
+window.location.href =
+"login.html";
+
 }
