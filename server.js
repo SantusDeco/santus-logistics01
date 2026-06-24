@@ -19,6 +19,9 @@ mongoose.connect(process.env.MONGO_URI)
     console.log(err);
 });
 
+const Admin =
+require("./AdminModel");
+
 /* GET ALL SHIPMENTS */
 app.get("/shipments", async (req, res) => {
   const shipments = await Shipment.find();
@@ -112,6 +115,35 @@ app.post("/admin-login", async (req, res) => {
     success: true,
     message: "Login Successful"
   });
+
+});
+
+app.post(
+"/admin-login",
+async (req,res)=>{
+
+    const {
+        username,
+        password
+    } = req.body;
+
+    const admin =
+    await Admin.findOne({
+        username,
+        password
+    });
+
+    if(admin){
+
+        return res.json({
+            success:true
+        });
+
+    }
+
+    res.json({
+        success:false
+    });
 
 });
 
