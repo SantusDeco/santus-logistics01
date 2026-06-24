@@ -118,35 +118,6 @@ app.post("/admin-login", async (req, res) => {
 
 });
 
-app.post(
-"/admin-login",
-async (req,res)=>{
-
-    const {
-        username,
-        password
-    } = req.body;
-
-    const admin =
-    await Admin.findOne({
-        username,
-        password
-    });
-
-    if(admin){
-
-        return res.json({
-            success:true
-        });
-
-    }
-
-    res.json({
-        success:false
-    });
-
-});
-
 const PORT =
 process.env.PORT || 3000;
 
