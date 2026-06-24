@@ -1,25 +1,34 @@
+const API =
+"https://santus-logistics01.onrender.com";
+
 let selectedShipment = null;
 
 loadShipments();
 
-async function loadShipments(){
+/* =========================
+LOAD SHIPMENTS
+========================= */
+async function loadShipments() {
 
-    const res = await fetch("/shipments");
-    const data = await res.json();
+    const res =
+    await fetch(`${API}/shipments`);
+
+    const data =
+    await res.json();
 
     let transit = 0;
     let delivered = 0;
     let processing = 0;
 
-    data.forEach(item=>{
+    data.forEach(item => {
 
-        if(item.status.includes("Transit"))
+        if(item.status === "In Transit")
             transit++;
 
-        if(item.status.includes("Delivered"))
+        if(item.status === "Delivered")
             delivered++;
 
-        if(item.status.includes("Warehouse"))
+        if(item.status === "Warehouse Processing")
             processing++;
 
     });
@@ -39,7 +48,10 @@ async function loadShipments(){
     renderShipments(data);
 }
 
-function generateTrackingId(){
+/* =========================
+GENERATE TRACKING ID
+========================= */
+function generateTrackingId() {
 
     return "ST" +
     Math.floor(
@@ -48,142 +60,179 @@ function generateTrackingId(){
 
 }
 
-function renderShipments(data){
+/* =========================
+RENDER SHIPMENTS
+========================= */
+function renderShipments(data) {
 
     const list =
     document.getElementById("shipmentList");
 
     list.innerHTML = "";
 
-    data.forEach(item=>{
+    data.forEach(item => {
 
         list.innerHTML += `
-<div class="card">
 
-<h3>${item.id}</h3>
+        <div class="card">
 
-<p><strong>Customer:</strong> ${item.customerName || "N/A"}</p>
+            <h3>${item.id}</h3>
 
-<p><strong>Customer Phone:</strong> ${item.customerPhone || "N/A"}</p>
+            <p><strong>Customer:</strong>
+            ${item.customerName || "N/A"}</p>
 
-<p><strong>Receiver:</strong> ${item.receiverName || "N/A"}</p>
+            <p><strong>Customer Phone:</strong>
+            ${item.customerPhone || "N/A"}</p>
 
-<p><strong>Receiver Phone:</strong> ${item.receiverPhone || "N/A"}</p>
+            <p><strong>Receiver:</strong>
+            ${item.receiverName || "N/A"}</p>
 
-<p><strong>Origin:</strong> ${item.origin || "N/A"}</p>
+            <p><strong>Receiver Phone:</strong>
+            ${item.receiverPhone || "N/A"}</p>
 
-<p><strong>Destination:</strong> ${item.destination || "N/A"}</p>
+            <p><strong>Origin:</strong>
+            ${item.origin || "N/A"}</p>
 
-<p><strong>Status:</strong> ${item.status}</p>
+            <p><strong>Destination:</strong>
+            ${item.destination || "N/A"}</p>
 
-<p><strong>Location:</strong> ${item.location}</p>
+            <p><strong>Status:</strong>
+            ${item.status}</p>
 
-<p><strong>ETA:</strong> ${item.eta}</p>
+            <p><strong>Location:</strong>
+            ${item.location || "N/A"}</p>
 
-<div class="actions">
+            <p><strong>ETA:</strong>
+            ${item.eta || "N/A"}</p>
 
-<button
-class="edit-btn"
-onclick="editShipment('${item.id}')">
-Edit
-</button>
+            <div class="actions">
 
-<button
-onclick="generateReceipt('${item.id}')">
-Receipt
-</button>
+                <button
+                class="edit-btn"
+                onclick="editShipment('${item.id}')">
+                Edit
+                </button>
 
-<button
-onclick="viewTimeline('${item.id}')">
-Timeline
-</button>
+                <button
+                onclick="generateReceipt('${item.id}')">
+                Receipt
+                </button>
 
-<button
-class="delete-btn"
-onclick="deleteShipment('${item.id}')">
-Delete
-</button>
+                <button
+                onclick="viewTimeline('${item.id}')">
+                Timeline
+                </button>
 
-</div>
+                <button
+                class="delete-btn"
+                onclick="deleteShipment('${item.id}')">
+                Delete
+                </button>
 
-</div>
-`;
-   
+            </div>
+
+        </div>
+
+        `;
+
     });
 
 }
 
-async function createShipment(){
+/* =========================
+CREATE SHIPMENT
+========================= */
+async function createShipment() {
 
-   const shipment = {
+    const shipment = {
 
-    id: generateTrackingId(),
+        id: generateTrackingId(),
 
-    customerName:
-    document.getElementById("customerName").value,
+        customerName:
+        document.getElementById("customerName").value,
 
-    customerPhone:
-    document.getElementById("customerPhone").value,
+        customerPhone:
+        document.getElementById("customerPhone").value,
 
-    receiverName:
-    document.getElementById("receiverName").value,
+        receiverName:
+        document.getElementById("receiverName").value,
 
-    receiverPhone:
-    document.getElementById("receiverPhone").value,
+        receiverPhone:
+        document.getElementById("receiverPhone").value,
 
-    origin:
-    document.getElementById("origin").value,
+        origin:
+        document.getElementById("origin").value,
 
-    destination:
-    document.getElementById("destination").value,
+        destination:
+        document.getElementById("destination").value,
 
-    status:
-    document.getElementById("status").value,
+        status:
+        document.getElementById("status").value,
 
-    location:
-    document.getElementById("location").value,
+        location:
+        document.getElementById("location").value,
 
-    eta:
-    document.getElementById("eta").value,
+        eta:
+        document.getElementById("eta").value,
 
-    history:[
-        "Order Confirmed"
-    ]
+        history: [
+            "Order Confirmed"
+        ]
+    };
 
-};
+    await fetch(`${API}/create-shipment`, {
 
-    await fetch("/create-shipment",{
+        method: "POST",
 
-        method:"POST",
-
-        headers:{
-            "Content-Type":"application/json"
+        headers: {
+            "Content-Type": "application/json"
         },
 
-        body:JSON.stringify(shipment)
+        body: JSON.stringify(shipment)
 
     });
 
+    alert("Shipment Created Successfully");
+
     loadShipments();
-    document.getElementById("location").value = "";
-document.getElementById("eta").value = "";
 }
 
-async function editShipment(id){
+/* =========================
+EDIT SHIPMENT
+========================= */
+async function editShipment(id) {
 
     const res =
-    await fetch("/shipments");
+    await fetch(`${API}/shipments`);
 
     const data =
     await res.json();
 
     const shipment =
-    data.find(x=>x.id===id);
+    data.find(item => item.id === id);
 
-    selectedShipment = id;
+    selectedShipment = shipment;
 
     document.getElementById("id").value =
     shipment.id;
+
+    document.getElementById("customerName").value =
+    shipment.customerName || "";
+
+    document.getElementById("customerPhone").value =
+    shipment.customerPhone || "";
+
+    document.getElementById("receiverName").value =
+    shipment.receiverName || "";
+
+    document.getElementById("receiverPhone").value =
+    shipment.receiverPhone || "";
+
+    document.getElementById("origin").value =
+    shipment.origin || "";
+
+    document.getElementById("destination").value =
+    shipment.destination || "";
 
     document.getElementById("status").value =
     shipment.status;
@@ -195,76 +244,124 @@ async function editShipment(id){
     shipment.eta;
 }
 
-async function updateShipment(){
+/* =========================
+UPDATE SHIPMENT
+========================= */
+async function updateShipment() {
 
-    if(!selectedShipment) return;
+    if(!selectedShipment) {
+        alert("Select a shipment first");
+        return;
+    }
 
     const shipment = {
 
-        id: document.getElementById("id").value,
-        status: document.getElementById("status").value,
-        location: document.getElementById("location").value,
-        eta: document.getElementById("eta").value
+        id:
+        document.getElementById("id").value,
 
+        customerName:
+        document.getElementById("customerName").value,
+
+        customerPhone:
+        document.getElementById("customerPhone").value,
+
+        receiverName:
+        document.getElementById("receiverName").value,
+
+        receiverPhone:
+        document.getElementById("receiverPhone").value,
+
+        origin:
+        document.getElementById("origin").value,
+
+        destination:
+        document.getElementById("destination").value,
+
+        status:
+        document.getElementById("status").value,
+
+        location:
+        document.getElementById("location").value,
+
+        eta:
+        document.getElementById("eta").value
     };
 
     const history = [];
 
-if(shipment.status === "Warehouse Processing"){
-    history.push("Warehouse Processing");
-}
+    if(shipment.status === "Warehouse Processing") {
+        history.push(
+            "Order Confirmed",
+            "Warehouse Processing"
+        );
+    }
 
-if(shipment.status === "In Transit"){
-    history.push(
-        "Warehouse Processing",
-        "In Transit"
-    );
-}
+    if(shipment.status === "In Transit") {
+        history.push(
+            "Order Confirmed",
+            "Warehouse Processing",
+            "In Transit"
+        );
+    }
 
-if(shipment.status === "Custom Clearance"){
-    history.push(
-        "Warehouse Processing",
-        "In Transit",
-        "Custom Clearance"
-    );
-}
+    if(shipment.status === "Custom Clearance") {
+        history.push(
+            "Order Confirmed",
+            "Warehouse Processing",
+            "In Transit",
+            "Custom Clearance"
+        );
+    }
 
-if(shipment.status === "Delivered"){
-    history.push(
-        "Warehouse Processing",
-        "In Transit",
-        "Custom Clearance",
-        "Delivered"
-    );
-}
+    if(shipment.status === "Delivered") {
+        history.push(
+            "Order Confirmed",
+            "Warehouse Processing",
+            "In Transit",
+            "Custom Clearance",
+            "Delivered"
+        );
+    }
 
-shipment.history = history;
+    shipment.history = history;
 
     await fetch(
-    `/update-shipment/${selectedShipment}`,
-    {
-        method:"PUT",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body:JSON.stringify(shipment)
-    });
+        `${API}/update-shipment/${selectedShipment.id}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(shipment)
+        }
+    );
+
+    alert("Shipment Updated");
 
     loadShipments();
 }
 
-async function deleteShipment(id){
+/* =========================
+DELETE SHIPMENT
+========================= */
+async function deleteShipment(id) {
+
+    if(!confirm("Delete shipment?")) return;
 
     await fetch(
-    `/delete-shipment/${id}`,
-    {
-        method:"DELETE"
-    });
+        `${API}/delete-shipment/${id}`,
+        {
+            method: "DELETE"
+        }
+    );
 
     loadShipments();
 }
 
-async function searchShipment(){
+/* =========================
+SEARCH SHIPMENT
+========================= */
+async function searchShipment() {
 
     const keyword =
     document.getElementById("searchInput")
@@ -272,244 +369,16 @@ async function searchShipment(){
     .toLowerCase();
 
     const res =
-    await fetch("/shipments");
+    await fetch(`${API}/shipments`);
 
     const data =
     await res.json();
 
     const filtered =
-    data.filter(item=>
+    data.filter(item =>
         item.id.toLowerCase()
         .includes(keyword)
     );
 
     renderShipments(filtered);
-}
-
-async function generateReceipt(id){
-
-    const res = await fetch("/shipments");
-    const data = await res.json();
-
-    const shipment =
-    data.find(item => item.id === id);
-
-    const receiptWindow =
-    window.open("", "_blank");
-
-    receiptWindow.document.write(`
-
-    <html>
-
-    <head>
-
-    <title>Santus Logistics Receipt</title>
-
-    <style>
-
-    body{
-        font-family:Arial, sans-serif;
-        padding:40px;
-        background:#f5f5f5;
-    }
-
-    .receipt{
-        background:white;
-        padding:30px;
-        border-radius:10px;
-        max-width:800px;
-        margin:auto;
-        box-shadow:0 0 15px rgba(0,0,0,0.15);
-    }
-
-    h1{
-        text-align:center;
-        color:#00b894;
-    }
-
-    h2{
-        text-align:center;
-        margin-bottom:20px;
-    }
-
-    table{
-        width:100%;
-        border-collapse:collapse;
-    }
-
-    td{
-        border:1px solid #ddd;
-        padding:12px;
-    }
-
-    td:first-child{
-        font-weight:bold;
-        width:35%;
-    }
-
-    .print-btn{
-        margin-top:20px;
-        padding:12px 20px;
-        background:#00b894;
-        color:white;
-        border:none;
-        border-radius:5px;
-        cursor:pointer;
-    }
-
-    </style>
-
-    </head>
-
-    <body>
-
-    <div class="receipt">
-
-    <h1>SANTUS LOGISTICS</h1>
-
-    <h2>Shipment Receipt</h2>
-
-    <table>
-
-    <tr>
-    <td>Tracking ID</td>
-    <td>${shipment.id}</td>
-    </tr>
-
-    <tr>
-    <td>Customer Name</td>
-    <td>${shipment.customerName || "N/A"}</td>
-    </tr>
-
-    <tr>
-    <td>Customer Phone</td>
-    <td>${shipment.customerPhone || "N/A"}</td>
-    </tr>
-
-    <tr>
-    <td>Receiver Name</td>
-    <td>${shipment.receiverName || "N/A"}</td>
-    </tr>
-
-    <tr>
-    <td>Receiver Phone</td>
-    <td>${shipment.receiverPhone || "N/A"}</td>
-    </tr>
-
-    <tr>
-    <td>Origin</td>
-    <td>${shipment.origin || "N/A"}</td>
-    </tr>
-
-    <tr>
-    <td>Destination</td>
-    <td>${shipment.destination || "N/A"}</td>
-    </tr>
-
-    <tr>
-    <td>Status</td>
-    <td>${shipment.status}</td>
-    </tr>
-
-    <tr>
-    <td>Current Location</td>
-    <td>${shipment.location}</td>
-    </tr>
-
-    <tr>
-    <td>ETA</td>
-    <td>${shipment.eta}</td>
-    </tr>
-
-    <tr>
-    <td>Generated Date</td>
-    <td>${new Date().toLocaleString()}</td>
-    </tr>
-
-    </table>
-
-    <button
-    class="print-btn"
-    onclick="window.print()">
-
-    Print Receipt
-
-    </button>
-
-    </div>
-
-    </body>
-
-    </html>
-
-    `);
-
-}
-async function viewTimeline(id){
-
-    const res =
-    await fetch("/shipments");
-
-    const data =
-    await res.json();
-
-    const shipment =
-    data.find(item=>item.id===id);
-
-    let timelineHTML = "";
-
-    shipment.history.forEach(step=>{
-
-        timelineHTML += `
-
-        <div style="
-        margin:15px 0;
-        padding:15px;
-        background:#172742;
-        color:white;
-        border-left:5px solid #00ffd0;
-        ">
-
-        ${step}
-
-        </div>
-
-        `;
-
-    });
-
-    const timelineWindow =
-    window.open("","_blank");
-
-    timelineWindow.document.write(`
-
-    <html>
-
-    <head>
-
-    <title>Timeline</title>
-
-    </head>
-
-    <body style="
-    font-family:Arial;
-    padding:30px;
-    ">
-
-    <h1>
-    Shipment Timeline
-    </h1>
-
-    <h2>
-    ${shipment.id}
-    </h2>
-
-    ${timelineHTML}
-
-    </body>
-
-    </html>
-
-    `);
-
 }
