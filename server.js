@@ -22,6 +22,8 @@ mongoose.connect(process.env.MONGO_URI)
 const Admin =
 require("./AdminModel");
 
+const bcrypt = require("bcryptjs");
+
 /* GET ALL SHIPMENTS */
 app.get("/shipments", async (req, res) => {
   const shipments = await Shipment.find();
@@ -97,27 +99,35 @@ const Admin = require("./AdminModel");
 /* ADMIN LOGIN */
 app.post("/admin-login", async (req, res) => {
 
-  const { username, password } = req.body;
+    const { username, password } = req.body;
 
-  const admin = await Admin.findOne({
-    username,
-    password
-  });
-
-  if (!admin) {
-    return res.status(401).json({
-      success: false,
-      message: "Invalid Username or Password"
+    const admin = await Admin.findOne({
+        username
     });
-  }
 
-  res.json({
-    success: true,
-    message: "Login Successful"
-  });
+    if (!admin) {
+        return res.json({
+            success: false
+        });
+    }
+
+    const match =
+    await bcrypt.compare(
+        password,
+        admin.password
+    );
+
+    if (!match) {
+        return res.json({
+            success: false
+        });
+    }
+
+    res.json({
+        success: true
+    });
 
 });
-
 const PORT =
 process.env.PORT || 3000;
 
