@@ -136,7 +136,10 @@ Santus Logistics Secure Dashboard
 
 <script>
 
-function login(){
+const API =
+"https://santus-logistics01.onrender.com";
+
+async function login(){
 
 const username =
 document.getElementById("username").value;
@@ -144,10 +147,23 @@ document.getElementById("username").value;
 const password =
 document.getElementById("password").value;
 
-if(
-username === "admin" &&
-password === "Santus123"
-){
+const res = await fetch(
+`${API}/admin-login`,
+{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+username,
+password
+})
+}
+);
+
+const data = await res.json();
+
+if(data.success){
 
 localStorage.setItem(
 "adminLoggedIn",
@@ -157,12 +173,11 @@ localStorage.setItem(
 window.location.href =
 "santus-admin.html";
 
-}
-else{
+}else{
 
-document.getElementById("error")
-.innerText =
-"Invalid Username or Password";
+alert(
+"Invalid Username or Password"
+);
 
 }
 

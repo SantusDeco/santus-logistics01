@@ -89,6 +89,32 @@ app.put("/update-shipment/:id", async (req, res) => {
 
 });
 
+const Admin = require("./AdminModel");
+
+/* ADMIN LOGIN */
+app.post("/admin-login", async (req, res) => {
+
+  const { username, password } = req.body;
+
+  const admin = await Admin.findOne({
+    username,
+    password
+  });
+
+  if (!admin) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid Username or Password"
+    });
+  }
+
+  res.json({
+    success: true,
+    message: "Login Successful"
+  });
+
+});
+
 const PORT =
 process.env.PORT || 3000;
 
