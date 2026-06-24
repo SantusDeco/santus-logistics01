@@ -127,3 +127,7 @@ app.listen(PORT, () => {
   );
 });
 
+app.get("/admins", async (req, res) => {
+  const admins = await Admin.find();
+  res.json(admins);
+});
