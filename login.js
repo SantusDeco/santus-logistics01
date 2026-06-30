@@ -25,11 +25,11 @@ async function login() {
 
     const data = await res.json();
 
-    if(data.success){
+    if (data.success) {
 
         localStorage.setItem(
-            "adminLoggedIn",
-            "true"
+            "adminToken",
+            data.token
         );
 
         window.location.href =

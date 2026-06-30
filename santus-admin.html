@@ -63,7 +63,10 @@ Logout
 
 <div class="form-section">
 
-<input type="text" id="id" placeholder="Auto Generated" readonly>
+<input type="text"
+id="id"
+placeholder="Auto Generated"
+readonly>
 
 <input type="text"
 id="customerName"
@@ -92,22 +95,63 @@ placeholder="Destination">
 <select id="status">
 
 <option>Warehouse Processing</option>
-
 <option>In Transit</option>
-
 <option>Custom Clearance</option>
-
 <option>Delivered</option>
 
 </select>
 
-<input type="text"
+<input
+type="text"
 id="location"
 placeholder="Current Location">
 
-<input type="text"
+<input
+type="text"
 id="eta"
-placeholder="ETA">
+placeholder="Estimated Delivery">
+
+<!-- NEW -->
+
+<input
+type="date"
+id="shipmentDate">
+
+<input
+type="text"
+id="weight"
+placeholder="Weight (KG)">
+
+<select id="shippingMethod">
+
+<option>Air Freight ✈️</option>
+<option>Sea Freight 🚢</option>
+<option>Road Freight 🚚</option>
+
+</select>
+
+<select id="packageType">
+
+<option>Document</option>
+<option>Parcel</option>
+<option>Electronics</option>
+<option>Furniture</option>
+<option>Cargo</option>
+<option>Vehicle</option>
+
+</select>
+
+<select id="paymentStatus">
+
+<option>Paid</option>
+<option>Pending</option>
+
+</select>
+
+<input
+type="text"
+id="description"
+placeholder="Package Description">
 
 <button onclick="createShipment()">
 Create

@@ -8,6 +8,9 @@ window.location.href = "login.html";
 const API =
 "https://santus-logistics01.onrender.com";
 
+const token =
+localStorage.getItem("adminToken");
+
 let selectedShipment = null;
 
 loadShipments();
@@ -153,47 +156,69 @@ async function createShipment() {
 
     const shipment = {
 
-        id: generateTrackingId(),
+    id: generateTrackingId(),
 
-        customerName:
-        document.getElementById("customerName").value,
+    customerName:
+    document.getElementById("customerName").value,
 
-        customerPhone:
-        document.getElementById("customerPhone").value,
+    customerPhone:
+    document.getElementById("customerPhone").value,
 
-        receiverName:
-        document.getElementById("receiverName").value,
+    receiverName:
+    document.getElementById("receiverName").value,
 
-        receiverPhone:
-        document.getElementById("receiverPhone").value,
+    receiverPhone:
+    document.getElementById("receiverPhone").value,
 
-        origin:
-        document.getElementById("origin").value,
+    origin:
+    document.getElementById("origin").value,
 
-        destination:
-        document.getElementById("destination").value,
+    destination:
+    document.getElementById("destination").value,
 
-        status:
-        document.getElementById("status").value,
+    status:
+    document.getElementById("status").value,
 
-        location:
-        document.getElementById("location").value,
+    location:
+    document.getElementById("location").value,
 
-        eta:
-        document.getElementById("eta").value,
+    eta:
+    document.getElementById("eta").value,
 
-        history: [
-            "Order Confirmed"
-        ]
-    };
+    shipmentDate:
+    document.getElementById("shipmentDate").value,
+
+    weight:
+    document.getElementById("weight").value,
+
+    shippingMethod:
+    document.getElementById("shippingMethod").value,
+
+    paymentStatus:
+    document.getElementById("paymentStatus").value,
+
+    packageType:
+    document.getElementById("packageType").value,
+
+    description:
+    document.getElementById("description").value,
+
+    receiptNumber:
+    "RCPT-" + Date.now(),
+
+    history: [
+        "Order Confirmed"
+    ]
+};
 
     await fetch(`${API}/create-shipment`, {
 
         method: "POST",
 
         headers: {
-            "Content-Type": "application/json"
-        },
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + token
+},
 
         body: JSON.stringify(shipment)
 
@@ -263,37 +288,58 @@ async function updateShipment() {
 
     const shipment = {
 
-        id:
-        document.getElementById("id").value,
+    id:
+    document.getElementById("id").value,
 
-        customerName:
-        document.getElementById("customerName").value,
+    customerName:
+    document.getElementById("customerName").value,
 
-        customerPhone:
-        document.getElementById("customerPhone").value,
+    customerPhone:
+    document.getElementById("customerPhone").value,
 
-        receiverName:
-        document.getElementById("receiverName").value,
+    receiverName:
+    document.getElementById("receiverName").value,
 
-        receiverPhone:
-        document.getElementById("receiverPhone").value,
+    receiverPhone:
+    document.getElementById("receiverPhone").value,
 
-        origin:
-        document.getElementById("origin").value,
+    origin:
+    document.getElementById("origin").value,
 
-        destination:
-        document.getElementById("destination").value,
+    destination:
+    document.getElementById("destination").value,
 
-        status:
-        document.getElementById("status").value,
+    status:
+    document.getElementById("status").value,
 
-        location:
-        document.getElementById("location").value,
+    location:
+    document.getElementById("location").value,
 
-        eta:
-        document.getElementById("eta").value
-    };
+    eta:
+    document.getElementById("eta").value,
 
+    shipmentDate:
+    document.getElementById("shipmentDate").value,
+
+    weight:
+    document.getElementById("weight").value,
+
+    shippingMethod:
+    document.getElementById("shippingMethod").value,
+
+    paymentStatus:
+    document.getElementById("paymentStatus").value,
+
+    packageType:
+    document.getElementById("packageType").value,
+
+    description:
+    document.getElementById("description").value,
+
+    receiptNumber:
+    selectedShipment.receiptNumber ||
+    ("RCPT-" + Date.now())
+};
     const history = [];
 
     if(shipment.status === "Warehouse Processing") {
@@ -337,8 +383,9 @@ async function updateShipment() {
         {
             method: "PUT",
             headers: {
-                "Content-Type": "application/json"
-            },
+    "Content-Type": "application/json",
+    "Authorization": "Bearer " + token
+},
             body: JSON.stringify(shipment)
         }
     );
@@ -356,11 +403,14 @@ async function deleteShipment(id) {
     if(!confirm("Delete shipment?")) return;
 
     await fetch(
-        `${API}/delete-shipment/${id}`,
-        {
-            method: "DELETE"
+    `${API}/delete-shipment/${id}`,
+    {
+        method: "DELETE",
+        headers: {
+            "Authorization": "Bearer " + token
         }
-    );
+    }
+);
 
     loadShipments();
 }
