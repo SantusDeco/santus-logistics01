@@ -2,28 +2,32 @@ require("dotenv").config();
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-
 const Admin = require("./AdminModel");
 
-mongoose.connect(process.env.MONGO_URI)
-.then(async () => {
+async function createAdmin() {
+    try {
+        await mongoose.connect(process.env.MONGO_URI);
+        console.log("Connected DB:", mongoose.connection.name);
 
-    const hashedPassword =
-    await bcrypt.hash(
-        "Santus123",
-        10
-    );
+        const hashedPassword = await bcrypt.hash("Santus123", 10);
 
-    await Admin.create({
-        username: "admin",
-        password: hashedPassword
-    });
+        await Admin.deleteOne({ username: "admin" });
 
-    console.log("Admin Created");
+        await Admin.create({
+            username: "admin",
+            password: hashedPassword
+        });
+        const admin = await Admin.findOne({ username: "admin" });
+        console.log(admin);
 
-    process.exit();
+        console.log("✅ Admin account created successfully.");
 
-})
-.catch(err => {
-    console.log(err);
-});
+        process.exit();
+
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
+}
+
+createAdmin();

@@ -189,7 +189,7 @@ app.post("/admin-login", async (req, res) => {
         const admin = await Admin.findOne({
             username
         });
-
+        console.log("Admin found:", admin);
         if (!admin) {
 
             return res.status(401).json({
