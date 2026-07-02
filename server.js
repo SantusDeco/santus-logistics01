@@ -186,15 +186,18 @@ app.post("/admin-login", async (req, res) => {
 
         const { username, password } = req.body;
 
-        const admin = await Admin.findOne({
-            username
-        });
+        console.log("Username entered:", username);
+        console.log("Password entered:", password);
+
+        const admin = await Admin.findOne({ username });
+
         console.log("Admin found:", admin);
+
         if (!admin) {
 
             return res.status(401).json({
                 success: false,
-                message: "Invalid Username or Password"
+                message: "Admin not found"
             });
 
         }
@@ -204,45 +207,39 @@ app.post("/admin-login", async (req, res) => {
             admin.password
         );
 
+        console.log("Password Match:", match);
+
         if (!match) {
 
             return res.status(401).json({
-                success: false,
-                message: "Invalid Username or Password"
+                success:false,
+                message:"Wrong Password"
             });
 
         }
 
         const token = jwt.sign(
-
             {
                 username: admin.username
             },
-
             process.env.JWT_SECRET,
-
             {
-                expiresIn: "24h"
+                expiresIn:"24h"
             }
-
         );
 
         res.json({
-
-            success: true,
+            success:true,
             token
-
         });
 
-    } catch (err) {
+    } catch(err){
 
         console.log(err);
 
         res.status(500).json({
-
-            success: false,
-            message: "Server Error"
-
+            success:false,
+            message:"Server Error"
         });
 
     }
