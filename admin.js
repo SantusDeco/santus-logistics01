@@ -1,27 +1,15 @@
-if(
-localStorage.getItem("adminLoggedIn")
-!== "true"
-){
-window.location.href = "login.html";
-}
-
-const API =
-"https://santus-logistics01.onrender.com";
-
-const token =
-localStorage.getItem("adminToken");
+requireLogin();
 
 let selectedShipment = null;
 
 loadShipments();
-
 /* =========================
 LOAD SHIPMENTS
 ========================= */
 async function loadShipments() {
 
     const res =
-    await fetch(`${API}/shipments`);
+     await api.get("/shipments");
 
     const data =
     await res.json();
@@ -211,71 +199,53 @@ async function createShipment() {
     ]
 };
 
-    await fetch(`${API}/create-shipment`, {
+    await api.post("/create-shipment", shipment);
 
-        method: "POST",
-
-        headers: {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer " + token
-},
-
-        body: JSON.stringify(shipment)
-
-    });
-
-    alert("Shipment Created Successfully");
-
+showToast("✅ Shipment Created Successfully");
     loadShipments();
 }
 
 /* =========================
 EDIT SHIPMENT
 ========================= */
-async function editShipment(id) {
+async function loadShipments() {
 
-    const res =
-    await fetch(`${API}/shipments`);
+    const res = await fetch(`${API}/shipments`, {
+        headers: authHeaders(false)
+    });
 
-    const data =
-    await res.json();
+    if (!res.ok) {
+        console.log(await res.text());
+        alert("Failed to load shipments.");
+        return;
+    }
 
-    const shipment =
-    data.find(item => item.id === id);
+    const data = await res.json();
 
-    selectedShipment = shipment;
+    let transit = 0;
+    let delivered = 0;
+    let processing = 0;
 
-    document.getElementById("id").value =
-    shipment.id;
+    data.forEach(item => {
 
-    document.getElementById("customerName").value =
-    shipment.customerName || "";
+        if(item.status === "In Transit")
+            transit++;
 
-    document.getElementById("customerPhone").value =
-    shipment.customerPhone || "";
+        if(item.status === "Delivered")
+            delivered++;
 
-    document.getElementById("receiverName").value =
-    shipment.receiverName || "";
+        if(item.status === "Warehouse Processing")
+            processing++;
 
-    document.getElementById("receiverPhone").value =
-    shipment.receiverPhone || "";
+    });
 
-    document.getElementById("origin").value =
-    shipment.origin || "";
+    document.getElementById("totalShipments").innerText = data.length;
+    document.getElementById("inTransit").innerText = transit;
+    document.getElementById("delivered").innerText = delivered;
+    document.getElementById("processing").innerText = processing;
 
-    document.getElementById("destination").value =
-    shipment.destination || "";
-
-    document.getElementById("status").value =
-    shipment.status;
-
-    document.getElementById("location").value =
-    shipment.location;
-
-    document.getElementById("eta").value =
-    shipment.eta;
+    renderShipments(data);
 }
-
 /* =========================
 UPDATE SHIPMENT
 ========================= */
@@ -378,20 +348,12 @@ async function updateShipment() {
 
     shipment.history = history;
 
-    await fetch(
-        `${API}/update-shipment/${selectedShipment.id}`,
-        {
-            method: "PUT",
-            headers: {
-    "Content-Type": "application/json",
-    "Authorization": "Bearer " + token
-},
-            body: JSON.stringify(shipment)
-        }
-    );
+    await api.put(
+    `/update-shipment/${selectedShipment.id}`,
+    shipment
+);
 
-    alert("Shipment Updated");
-
+showToast("✏️ Shipment Updated");
     loadShipments();
 }
 
@@ -400,21 +362,41 @@ DELETE SHIPMENT
 ========================= */
 async function deleteShipment(id) {
 
-    if(!confirm("Delete shipment?")) return;
+    const ok = await confirmDelete(
+        "This shipment will be permanently deleted."
+    );
 
-    await fetch(
-    `${API}/delete-shipment/${id}`,
-    {
-        method: "DELETE",
-        headers: {
-            "Authorization": "Bearer " + token
-        }
-    }
-);
+    if (!ok) return;
 
-    loadShipments();
+    try {
+
+        const res = await api.delete(`/delete-shipment/${id}`);
+
+const data = await res.json();
+
+if (!res.ok) {
+
+    showToast(data.message, "error");
+
+    return;
+
 }
 
+showToast("🗑 Shipment Deleted Successfully");
+
+loadShipments();
+    } catch (err) {
+
+        showToast(
+            "❌ Failed To Delete Shipment",
+            "error"
+        );
+
+        console.error(err);
+
+    }
+
+}
 /* =========================
 SEARCH SHIPMENT
 ========================= */
@@ -440,13 +422,4 @@ async function searchShipment() {
     renderShipments(filtered);
 }
 
-function logout(){
-
-localStorage.removeItem(
-"adminLoggedIn"
-);
-
-window.location.href =
-"login.html";
-
-}
+showToast("Welcome back Santus!");

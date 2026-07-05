@@ -165,15 +165,38 @@ DELETE SHIPMENT
 app.delete(
 "/delete-shipment/:id",
 verifyToken,
-async(req,res)=>{
+async (req, res) => {
 
-    await Shipment.deleteOne({
-        id:req.params.id
-    });
+    try {
 
-    res.json({
-        message:"Shipment Deleted"
-    });
+        const result = await Shipment.deleteOne({
+            id: req.params.id
+        });
+
+        if (result.deletedCount === 0) {
+
+            return res.status(404).json({
+                success: false,
+                message: "Shipment not found"
+            });
+
+        }
+
+        res.json({
+            success: true,
+            message: "Shipment Deleted"
+        });
+
+    } catch (err) {
+
+        console.error(err);
+
+        res.status(500).json({
+            success: false,
+            message: "Server Error"
+        });
+
+    }
 
 });
 /* =========================
