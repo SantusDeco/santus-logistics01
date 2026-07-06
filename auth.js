@@ -2,11 +2,9 @@
 // Santus Logistics Enterprise Auth System
 // =======================================
 
-const API = "https://santus-logistics01.onrender.com";
 
-/**
- * Save JWT Token
- */
+
+
 function saveToken(token) {
     localStorage.setItem("adminToken", token);
 }
