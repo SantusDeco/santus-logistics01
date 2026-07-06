@@ -24,23 +24,22 @@ async function login() {
 
     console.log(data);
 
-    if (data.success) {
+   if (data.success) {
 
-        localStorage.setItem("adminToken", data.token);
+    saveToken(data.token);
 
-        alert("Token Saved Successfully");
+    showToast("✅ Login Successful");
 
-        console.log(
-            localStorage.getItem("adminToken")
-        );
+    setTimeout(() => {
+        window.location.href = "santus-admin.html";
+    }, 800);
 
-        // TEMPORARILY REMOVE THIS
-        // window.location.href = "santus-admin.html";
+} else {
 
-    } else {
+    showToast(
+        "❌ Invalid Username or Password",
+        "error"
+    );
 
-        alert("Invalid Username or Password");
-
-    }
-
+}
 }
