@@ -117,7 +117,7 @@ function renderShipments(data) {
                 </button>
 
                 <button
-                onclick="viewTimeline('${item.id}')">
+                onclick="showTimeline('${item.id}')">
                 Timeline
                 </button>
 
@@ -423,3 +423,172 @@ async function searchShipment() {
 }
 
 showToast("Welcome back Santus!");
+
+async function generateReceipt(id) {
+
+    const res = await api.get("/shipments");
+    const shipments = await res.json();
+
+    const shipment = shipments.find(
+        item => item.id === id
+    );
+
+    if (!shipment) {
+        showToast("Shipment Not Found", "error");
+        return;
+    }
+
+    const receiptWindow = window.open("", "_blank");
+
+    receiptWindow.document.write(`
+        <html>
+        <head>
+            <title>Shipment Receipt</title>
+            <style>
+                body{
+                    font-family:Arial;
+                    padding:20px;
+                }
+                h1{
+                    color:#00f5d4;
+                }
+                p{
+                    font-size:16px;
+                }
+            </style>
+        </head>
+        <body>
+
+<h1 style="text-align:center;color:#00d4aa;">
+Santus Logistics Receipt
+</h1>
+
+<hr>
+
+<p><strong>Tracking ID:</strong> ${shipment.id}</p>
+
+<p><strong>Customer Name:</strong> ${shipment.customerName}</p>
+
+<p><strong>Customer Phone:</strong> ${shipment.customerPhone}</p>
+
+<p><strong>Receiver Name:</strong> ${shipment.receiverName}</p>
+
+<p><strong>Receiver Phone:</strong> ${shipment.receiverPhone}</p>
+
+<p><strong>Origin:</strong> ${shipment.origin}</p>
+
+<p><strong>Destination:</strong> ${shipment.destination}</p>
+
+<p><strong>Current Location:</strong> ${shipment.location}</p>
+
+<p><strong>Status:</strong> ${shipment.status}</p>
+
+<p><strong>Estimated Delivery:</strong> ${shipment.eta}</p>
+
+<hr>
+
+<h3>Shipment Details</h3>
+
+<p><strong>Weight:</strong> ${shipment.weight || "N/A"} KG</p>
+
+<p><strong>Service:</strong> ${shipment.service || "N/A"}</p>
+
+<p><strong>Package Type:</strong> ${shipment.packageType || "N/A"}</p>
+
+<p><strong>Payment Status:</strong> ${shipment.paymentStatus || "N/A"}</p>
+
+<p><strong>Description:</strong> ${shipment.description || "N/A"}</p>
+
+<hr>
+
+<p style="text-align:center">
+Thank you for choosing
+<b>Santus Logistics</b><br>
+Fast • Secure • Reliable
+</p>
+
+</body>
+        </html>
+    `);
+
+    receiptWindow.document.close();
+
+    receiptWindow.print();
+}
+
+async function showTimeline(id) {
+
+    const res = await api.get("/shipments");
+    const shipments = await res.json();
+
+    const shipment = shipments.find(
+        item => item.id === id
+    );
+
+    if (!shipment) {
+        showToast("Shipment Not Found", "error");
+        return;
+    }
+
+    const timelineWindow = window.open("", "_blank");
+
+    timelineWindow.document.write(`
+    <html>
+    <head>
+        <title>Shipment Timeline</title>
+
+        <style>
+
+            body{
+                font-family:Arial;
+                padding:30px;
+                background:#f5f5f5;
+            }
+
+            h1{
+                color:#00b894;
+            }
+
+            .step{
+                padding:15px;
+                margin:15px 0;
+                border-left:6px solid #00b894;
+                background:white;
+                border-radius:8px;
+            }
+
+            .active{
+                background:#dff9fb;
+                font-weight:bold;
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <h1>Shipment Timeline</h1>
+
+        <h3>Tracking ID: ${shipment.id}</h3>
+
+        <div class="step ${shipment.status === "Warehouse Processing" ? "active" : ""}">
+            📦 Warehouse Processing
+        </div>
+
+        <div class="step ${shipment.status === "In Transit" ? "active" : ""}">
+            ✈ Shipment In Transit
+        </div>
+
+        <div class="step ${shipment.status === "Delivered" ? "active" : ""}">
+            ✅ Delivered
+        </div>
+
+    </body>
+
+    </html>
+    `);
+
+    timelineWindow.document.close();
+
+}

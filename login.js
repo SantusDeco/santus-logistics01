@@ -30,10 +30,8 @@ async function login() {
 
     showToast("✅ Login Successful");
 
-    setTimeout(() => {
-        window.location.href = "santus-admin.html";
-    }, 800);
 
+window.location.href = "santus-admin.html";
 } else {
 
     showToast(
