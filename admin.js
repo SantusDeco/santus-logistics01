@@ -142,6 +142,29 @@ function renderShipments(data) {
             ${item.eta || "N/A"}
 
             </p>
+            <p>📅 <strong>Shipment Date</strong><br>
+${item.shipmentDate || "N/A"}
+</p>
+
+<p>⚖️ <strong>Weight</strong><br>
+${item.weight || "N/A"} KG
+</p>
+
+<p>🚚 <strong>Shipping Method</strong><br>
+${item.shippingMethod || "N/A"}
+</p>
+
+<p>📦 <strong>Package Type</strong><br>
+${item.packageType || "N/A"}
+</p>
+
+<p>💳 <strong>Payment Status</strong><br>
+${item.paymentStatus || "N/A"}
+</p>
+
+<p>📝 <strong>Description</strong><br>
+${item.description || "N/A"}
+</p>
 
             <div class="actions">
 
@@ -531,6 +554,18 @@ Santus Logistics Receipt
 <p><strong>Status:</strong> ${shipment.status}</p>
 
 <p><strong>Estimated Delivery:</strong> ${shipment.eta}</p>
+
+<p><strong>Shipment Date:</strong> ${shipment.shipmentDate || "N/A"}</p>
+
+<p><strong>Weight:</strong> ${shipment.weight || "N/A"} KG</p>
+
+<p><strong>Shipping Method:</strong> ${shipment.shippingMethod || "N/A"}</p>
+
+<p><strong>Package Type:</strong> ${shipment.packageType || "N/A"}</p>
+
+<p><strong>Payment Status:</strong> ${shipment.paymentStatus || "N/A"}</p>
+
+<p><strong>Description:</strong> ${shipment.description || "N/A"}</p>
 
 <hr>
 
