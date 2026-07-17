@@ -1092,3 +1092,32 @@ width:100%;
 }
 
 }
+.route-plane{
+
+font-size:28px;
+
+animation:planeFly 3s infinite ease-in-out;
+
+}
+
+@keyframes planeFly{
+
+0%{
+
+transform:translateX(-12px);
+
+}
+
+50%{
+
+transform:translateX(12px);
+
+}
+
+100%{
+
+transform:translateX(-12px);
+
+}
+
+}

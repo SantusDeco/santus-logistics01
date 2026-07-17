@@ -151,19 +151,13 @@ ${data.status}
 </div>
 
 </div>
-<div class="route-map">
-
-<h3>🌍 Shipment Route</h3>
-
-<div class="route-row">
-
 <div class="route-point">
 
-<div class="route-icon">📍</div>
+<div class="route-icon">🚚</div>
 
-<h4>Origin</h4>
+<h4>Current</h4>
 
-<p>${data.origin || "N/A"}</p>
+<p>${data.location || "N/A"}</p>
 
 </div>
 
@@ -171,7 +165,7 @@ ${data.status}
 
 <div class="route-line">
 
-<div class="route-truck">🚚</div>
+<div class="route-plane">✈️</div>
 
 </div>
 
@@ -188,14 +182,6 @@ ${data.status}
 </div>
 
 </div>
-
-<p class="current-location">
-
-Current Location:
-<strong>${data.location || "N/A"}</strong>
-
-</p>
-
 </div>
 <div class="description-box">
 
