@@ -27,41 +27,34 @@ mongoose.connect(process.env.MONGO_URI)
    JWT VERIFY MIDDLEWARE
 ========================= */
 
-function verifyToken(req, res, next){
+function verifyToken(req, res, next) {
 
-    const authHeader =
-    req.headers.authorization;
+    const authHeader = req.headers.authorization;
 
-    if(!authHeader){
+    console.log("Authorization:", authHeader);
 
+    if (!authHeader) {
         return res.status(401).json({
-            message:"Access Denied"
+            message: "Access Denied"
         });
-
     }
 
-    const token =
-    authHeader.split(" ")[1];
+    const token = authHeader.replace("Bearer ", "");
 
-    try{
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
 
-        const verified =
-        jwt.verify(
-            token,
-            process.env.JWT_SECRET
-        );
+        if (err) {
+            console.log("JWT VERIFY ERROR:", err);
+            return res.status(403).json({
+                message: "Invalid Token"
+            });
+        }
 
-        req.admin = verified;
+        req.admin = decoded;
 
         next();
 
-    }catch(err){
-
-        return res.status(403).json({
-            message:"Invalid Token"
-        });
-
-    }
+    });
 
 }
 /* =========================
@@ -161,29 +154,44 @@ async(req,res)=>{
 /* =========================
 DELETE SHIPMENT
 ========================= */
+/* =========================
+DELETE SHIPMENT
+========================= */
 
 app.delete(
     "/delete-shipment/:id",
     verifyToken,
     async (req, res) => {
 
-        console.log("========== DELETE REQUEST ==========");
-        console.log("Authorization Header:");
-        console.log(req.headers.authorization);
+        try {
 
-        console.log("Verified Admin:");
-        console.log(req.admin);
+            const deleted = await Shipment.deleteOne({
+                id: req.params.id
+            });
 
-        await Shipment.deleteOne({
-            id: req.params.id
-        });
+            if (deleted.deletedCount === 0) {
+                return res.status(404).json({
+                    message: "Shipment Not Found"
+                });
+            }
 
-        res.json({
-            message: "Shipment Deleted"
-        });
+            res.json({
+                message: "Shipment Deleted Successfully"
+            });
+
+        } catch (err) {
+
+            console.log(err);
+
+            res.status(500).json({
+                message: "Server Error"
+            });
+
+        }
 
     }
 );
+
 /* =========================
 ADMIN LOGIN
 ========================= */
