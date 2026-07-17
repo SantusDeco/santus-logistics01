@@ -199,56 +199,82 @@ ${data.status}
         /* =========================
            TIMELINE
         ========================== */
+let progress = 0;
 
-        let progress = 0;
+let stageText = "";
 
-        switch (data.status) {
+switch(data.status){
 
-            case "Warehouse Processing":
+case "Warehouse Processing":
 
-                steps[0].classList.add("active");
+progress = 20;
 
-                progress = 0;
+stageText = "Warehouse Processing";
 
-                break;
+steps[0].classList.add("active");
 
+break;
 
-            case "Custom Clearance":
+case "Custom Clearance":
 
-                steps[0].classList.add("active");
-                steps[1].classList.add("active");
-                steps[2].classList.add("active");
-                steps[3].classList.add("active");
+progress = 40;
 
-                progress = 75;
+stageText = "Custom Clearance";
 
-                break;
+steps[0].classList.add("active");
+steps[1].classList.add("active");
+steps[2].classList.add("active");
 
+break;
 
-            case "In Transit":
+case "In Transit":
 
-                steps[0].classList.add("active");
-                steps[1].classList.add("active");
-                steps[2].classList.add("active");
+progress = 70;
 
-                progress = 50;
+stageText = "In Transit";
 
-                break;
+steps[0].classList.add("active");
+steps[1].classList.add("active");
+steps[2].classList.add("active");
 
+break;
 
-            case "Delivered":
+case "Out For Delivery":
 
-                steps.forEach(step => {
+progress = 90;
 
-                    step.classList.add("active");
+stageText = "Out For Delivery";
 
-                });
+steps.forEach(step=>step.classList.add("active"));
 
-                progress = 100;
+break;
 
-                break;
-        }
+case "Delivered":
 
+progress = 100;
+
+stageText = "Delivered";
+
+steps.forEach(step=>step.classList.add("active"));
+
+break;
+
+}
+document
+.getElementById("progressFill")
+.style.width = progress + "%";
+
+document
+.getElementById("progressText")
+.textContent = progress + "%";
+
+document
+.getElementById("progressStage")
+.textContent = stageText;
+
+document
+.getElementById("progressContainer")
+.classList.remove("hidden");
 
         truck.style.left = progress + "%";
 
