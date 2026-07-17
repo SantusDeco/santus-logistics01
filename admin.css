@@ -401,3 +401,44 @@ Enterprise Dashboard Header
     background:#c1121f;
 
 }
+/* ==========================
+Mobile Dashboard Header
+========================== */
+
+@media (max-width:768px){
+
+.dashboard-header{
+
+    flex-direction:column;
+
+    text-align:center;
+
+    gap:18px;
+
+}
+
+.header-right{
+
+    align-items:center;
+
+}
+
+.header-left h1{
+
+    font-size:28px;
+
+}
+
+.header-center{
+
+    font-size:18px;
+
+}
+
+.logout-btn{
+
+    width:170px;
+
+}
+
+}
