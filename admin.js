@@ -592,3 +592,23 @@ async function showTimeline(id) {
     timelineWindow.document.close();
 
 }
+
+/* =========================
+Dashboard Clock
+========================= */
+
+function updateDashboardClock(){
+
+    const now = new Date();
+
+    document.getElementById("currentDate").innerHTML =
+        now.toLocaleDateString();
+
+    document.getElementById("currentTime").innerHTML =
+        now.toLocaleTimeString();
+
+}
+
+updateDashboardClock();
+
+setInterval(updateDashboardClock,1000);

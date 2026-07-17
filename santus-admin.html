@@ -12,31 +12,47 @@
 <body>
 
 <div class="container">
+<!-- =========================
+Enterprise Header
+========================= -->
 
-<div style="
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-">
+<header class="dashboard-header">
 
-<h1>Santus Logistics Dashboard</h1>
+    <div class="header-left">
 
-<button
-onclick="logout()"
-style="
-background:#e74c3c;
-color:white;
-border:none;
-padding:10px 15px;
-border-radius:6px;
-cursor:pointer;
-">
-Logout
-</button>
+        <h1>🚚 Santus Logistics</h1>
 
-</div>
+        <p>Enterprise Admin Dashboard</p>
 
+    </div>
+
+    <div class="header-center">
+
+        <div id="currentDate"></div>
+
+        <div id="currentTime"></div>
+
+    </div>
+
+    <div class="header-right">
+
+        <span class="welcome-text">
+
+            Welcome, Admin
+
+        </span>
+
+        <button
+            class="logout-btn"
+            onclick="logout()">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
 <div class="stats">
 
 <div class="stat-card">
