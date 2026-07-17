@@ -96,78 +96,107 @@ ${data.status}
 
 <div class="shipment-grid">
 
-<div>
-<label>Tracking ID</label>
-<p>${data.id}</p>
-</div>
-
-<div>
-<label>Shipment Date</label>
-<p>${data.shipmentDate || "N/A"}</p>
-</div>
-
-<div>
-<label>Customer</label>
+<div class="info-card">
+<h4>👤 Customer</h4>
 <p>${data.customerName || "N/A"}</p>
+<small>${data.customerPhone || "N/A"}</small>
 </div>
 
-<div>
-<label>Customer Phone</label>
-<p>${data.customerPhone || "N/A"}</p>
-</div>
-
-<div>
-<label>Receiver</label>
+<div class="info-card">
+<h4>📦 Receiver</h4>
 <p>${data.receiverName || "N/A"}</p>
+<small>${data.receiverPhone || "N/A"}</small>
 </div>
 
-<div>
-<label>Receiver Phone</label>
-<p>${data.receiverPhone || "N/A"}</p>
-</div>
-
-<div>
-<label>Origin</label>
+<div class="info-card">
+<h4>📍 Route</h4>
 <p>${data.origin || "N/A"}</p>
-</div>
-
-<div>
-<label>Destination</label>
+<div class="route-arrow">⬇</div>
 <p>${data.destination || "N/A"}</p>
 </div>
 
-<div>
-<label>Current Location</label>
+<div class="info-card">
+<h4>🚚 Current Location</h4>
 <p>${data.location || "N/A"}</p>
 </div>
 
-<div>
-<label>ETA</label>
+<div class="info-card">
+<h4>📅 Shipment Date</h4>
+<p>${data.shipmentDate || "N/A"}</p>
+</div>
+
+<div class="info-card">
+<h4>⏰ ETA</h4>
 <p>${data.eta || "N/A"}</p>
 </div>
 
-<div>
-<label>Weight</label>
+<div class="info-card">
+<h4>⚖ Weight</h4>
 <p>${data.weight || "N/A"} KG</p>
 </div>
 
-<div>
-<label>Shipping Method</label>
+<div class="info-card">
+<h4>✈ Shipping</h4>
 <p>${data.shippingMethod || "N/A"}</p>
 </div>
 
-<div>
-<label>Package Type</label>
+<div class="info-card">
+<h4>📦 Package Type</h4>
 <p>${data.packageType || "N/A"}</p>
 </div>
 
-<div>
-<label>Payment Status</label>
+<div class="info-card">
+<h4>💳 Payment</h4>
 <p>${data.paymentStatus || "N/A"}</p>
 </div>
 
 </div>
+<div class="route-map">
 
+<h3>🌍 Shipment Route</h3>
+
+<div class="route-row">
+
+<div class="route-point">
+
+<div class="route-icon">📍</div>
+
+<h4>Origin</h4>
+
+<p>${data.origin || "N/A"}</p>
+
+</div>
+
+<div class="route-middle">
+
+<div class="route-line">
+
+<div class="route-truck">🚚</div>
+
+</div>
+
+</div>
+
+<div class="route-point">
+
+<div class="route-icon">🏁</div>
+
+<h4>Destination</h4>
+
+<p>${data.destination || "N/A"}</p>
+
+</div>
+
+</div>
+
+<p class="current-location">
+
+Current Location:
+<strong>${data.location || "N/A"}</strong>
+
+</p>
+
+</div>
 <div class="description-box">
 
 <h4>Package Description</h4>

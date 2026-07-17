@@ -110,74 +110,42 @@ Track Shipment
 </button>
 
 </div>
-
 <div id="loading" class="loading hidden">
-<div class="spinner"></div>
-<p>Connecting to Santus Global Network...</p>
+    <div class="spinner"></div>
+    <p>Connecting to Santus Global Network...</p>
 </div>
 
 <div id="trackingResult">
-<div id="shipmentHero" class="shipment-hero hidden">
 
-    <div class="hero-left">
+    <!-- Shipment Header -->
+    <div id="shipmentHeader" class="shipment-header hidden">
 
-        <h2 id="heroTrackingId">ST0000</h2>
+        <h2 id="shipmentTitle">
+            Shipment
+        </h2>
 
-        <span id="heroStatus" class="hero-status">
-            IN TRANSIT
+        <span id="statusBadge" class="status-badge">
+            Status
         </span>
 
     </div>
 
-    <div class="hero-right">
+    <!-- Progress Bar -->
+    <div id="progressContainer" class="progress-container hidden">
 
-        <div class="hero-box">
-
-            <small>Current Location</small>
-
-            <h3 id="heroLocation">Dallas</h3>
-
+        <div class="progress-bar">
+            <div id="progressFill"></div>
         </div>
 
-        <div class="hero-box">
-
-            <small>Estimated Delivery</small>
-
-            <h3 id="heroEta">4 Days</h3>
-
-        </div>
+        <p id="progressText">0%</p>
 
     </div>
 
-</div>
-<div class="shipment-header hidden" id="shipmentHeader">
-
-<h2 id="shipmentTitle">
-Shipment ST0000
-</h2>
-
-<span id="statusBadge" class="status-badge">
-IN TRANSIT
-</span>
+    <!-- Shipment Information -->
+    <div id="shipmentSummary"></div>
 
 </div>
 
-<div class="progress-container hidden" id="progressContainer">
-
-<div class="progress-bar">
-
-<div id="progressFill"></div>
-
-</div>
-
-<p id="progressText">0%</p>
-
-</div>
-
-<div id="shipmentSummary"></div>
-
-</div>
-</div>
 
 <!-- =========================
      TIMELINE
