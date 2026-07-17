@@ -168,6 +168,14 @@ ${item.description || "N/A"}
 
             <div class="actions">
 
+            <button
+class="details-btn"
+onclick="viewShipmentDetails('${item.id}')">
+
+👁 Details
+
+</button>
+
                 <button
                 class="edit-btn"
                 onclick="editShipment('${item.id}')">
