@@ -1,5 +1,4 @@
-console.log("ADMIN VERSION 17 JULY");
-console.log("ADMIN.JS LOADED");
+
 requireLogin();
 
 let selectedShipment = null;
