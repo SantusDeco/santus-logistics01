@@ -402,42 +402,62 @@ Enterprise Dashboard Header
 
 }
 /* ==========================
-Mobile Dashboard Header
+Mobile Dashboard
 ========================== */
 
-@media (max-width:768px){
+@media screen and (max-width:768px){
 
 .dashboard-header{
 
-    flex-direction:column;
+    display:flex;
+
+    flex-direction:column !important;
+
+    justify-content:center !important;
+
+    align-items:center !important;
 
     text-align:center;
 
-    gap:18px;
+    gap:20px;
+
+    padding:20px;
 
 }
 
-.header-right{
+.header-left{
 
-    align-items:center;
-
-}
-
-.header-left h1{
-
-    font-size:28px;
+    width:100%;
 
 }
 
 .header-center{
 
-    font-size:18px;
+    width:100%;
+
+}
+
+.header-right{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center !important;
+
+}
+
+.header-left h1{
+
+    font-size:32px;
 
 }
 
 .logout-btn{
 
-    width:170px;
+    width:180px;
 
 }
 
