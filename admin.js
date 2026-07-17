@@ -695,80 +695,93 @@ Fast • Secure • Reliable
     receiptWindow.print();
 }
 
-async function showTimeline(id) {
+async function showTimeline(id){
 
-    const res = await api.get("/shipments");
-    const shipments = await res.json();
+const res = await api.get("/shipments");
 
-    const shipment = shipments.find(
-        item => item.id === id
-    );
+const shipments = await res.json();
 
-    if (!shipment) {
-        showToast("Shipment Not Found", "error");
-        return;
-    }
+const shipment = shipments.find(s => s.id === id);
 
-    const timelineWindow = window.open("", "_blank");
+if(!shipment){
 
-    timelineWindow.document.write(`
-    <html>
-    <head>
-        <title>Shipment Timeline</title>
+showToast("Shipment not found","error");
 
-        <style>
-
-            body{
-                font-family:Arial;
-                padding:30px;
-                background:#f5f5f5;
-            }
-
-            h1{
-                color:#00b894;
-            }
-
-            .step{
-                padding:15px;
-                margin:15px 0;
-                border-left:6px solid #00b894;
-                background:white;
-                border-radius:8px;
-            }
-
-            .active{
-                background:#dff9fb;
-                font-weight:bold;
-            }
-
-        </style>
-
-    </head>
-
-    <body>
-
-        <h1>Shipment Timeline</h1>
-
-        <h3>Tracking ID: ${shipment.id}</h3>
-
-        <div class="step ${shipment.status === "Warehouse Processing" ? "active" : ""}">
-            📦 Warehouse Processing
-        </div>
-
-        <div class="step ${shipment.status === "In Transit" ? "active" : ""}">
-            ✈ Shipment In Transit
-        </div>
-
-        <div class="step ${shipment.status === "Delivered" ? "active" : ""}">
-            ✅ Delivered
-        </div>
-
-    </body>
-
-    </html>
-    `);
-
-    timelineWindow.document.close();
+return;
 
 }
 
+const stages = [
+
+"Warehouse Processing",
+
+"Custom Clearance",
+
+"In Transit",
+
+"Out For Delivery",
+
+"Delivered"
+
+];
+
+const currentIndex = stages.indexOf(shipment.status);
+
+let html="";
+
+stages.forEach((stage,index)=>{
+
+let cls="";
+
+if(index<currentIndex){
+
+cls="completed";
+
+}else if(index===currentIndex){
+
+cls="active";
+
+}
+
+html+=`
+
+<div class="timeline-item">
+
+<div>
+
+<div class="timeline-dot ${cls}"></div>
+
+${index!==stages.length-1?'<div class="timeline-line"></div>':''}
+
+</div>
+
+<div class="timeline-content">
+
+<h4>${stage}</h4>
+
+<p>${shipment.location || "Waiting..."}</p>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("timelineBody").innerHTML=`
+
+<h3>${shipment.id}</h3>
+
+${html}
+
+`;
+
+document.getElementById("timelineModal").style.display="block";
+
+}
+function closeTimeline(){
+
+document.getElementById("timelineModal").style.display="none";
+
+}

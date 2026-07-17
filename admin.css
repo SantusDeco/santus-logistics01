@@ -783,3 +783,75 @@ transform:translateY(0);
 }
 
 }
+
+.timeline-item{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:15px;
+
+margin:20px 0;
+
+position:relative;
+
+}
+
+.timeline-dot{
+
+width:18px;
+
+height:18px;
+
+border-radius:50%;
+
+background:#666;
+
+margin-top:5px;
+
+}
+
+.timeline-dot.active{
+
+background:#00f5d4;
+
+box-shadow:0 0 15px #00f5d4;
+
+}
+
+.timeline-dot.completed{
+
+background:#00ff88;
+
+box-shadow:0 0 15px #00ff88;
+
+}
+
+.timeline-line{
+
+width:2px;
+
+height:45px;
+
+background:#555;
+
+margin-left:8px;
+
+}
+
+.timeline-content h4{
+
+margin:0;
+
+color:white;
+
+}
+
+.timeline-content p{
+
+margin:5px 0;
+
+color:#bbb;
+
+}
