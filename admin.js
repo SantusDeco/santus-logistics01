@@ -777,15 +777,21 @@ async function showTimeline(id) {
 
                 <p><strong>📅 Date:</strong> ${shipment.shipmentDate || "N/A"}</p>
 
-                <p><strong>Status:</strong>
-                ${
-                    index < currentIndex
-                        ? "✅ Completed"
-                        : index === currentIndex
-                        ? "🚚 Current Stage"
-                        : "⏳ Pending"
-                }
-                </p>
+                <p>
+
+<span class="timeline-status ${cls}">
+
+${
+index < currentIndex
+? "Completed"
+: index === currentIndex
+? "Current Stage"
+: "Pending"
+}
+
+</span>
+
+</p>
 
             </div>
 
@@ -802,7 +808,10 @@ async function showTimeline(id) {
         ${html}
 
     `;
+const progress = ((currentIndex + 1) / stages.length) * 100;
 
+document.getElementById("timelineProgressBar").style.width =
+progress + "%";
     document.getElementById("timelineModal").style.display = "block";
 
 }
