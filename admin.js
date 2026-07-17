@@ -63,68 +63,116 @@ RENDER SHIPMENTS
 ========================= */
 function renderShipments(data) {
 
-    const list =
-    document.getElementById("shipmentList");
+    const list = document.getElementById("shipmentList");
 
     list.innerHTML = "";
 
     data.forEach(item => {
 
+        let badgeClass = "";
+
+        switch(item.status){
+
+            case "Delivered":
+                badgeClass = "badge-delivered";
+                break;
+
+            case "In Transit":
+                badgeClass = "badge-transit";
+                break;
+
+            case "Warehouse Processing":
+                badgeClass = "badge-processing";
+                break;
+
+            default:
+                badgeClass = "badge-custom";
+        }
+
         list.innerHTML += `
 
         <div class="card">
 
-            <h3>${item.id}</h3>
+            <div class="card-top">
 
-            <p><strong>Customer:</strong>
+                <h2>🚚 ${item.id}</h2>
+
+                <span class="status-badge ${badgeClass}">
+                    ${item.status}
+                </span>
+
+            </div>
+
+            <hr>
+
+            <p>👤 <strong>Customer</strong><br>
             ${item.customerName || "N/A"}</p>
 
-            <p><strong>Customer Phone:</strong>
+            <p>📞 <strong>Customer Phone</strong><br>
             ${item.customerPhone || "N/A"}</p>
 
-            <p><strong>Receiver:</strong>
+            <p>📦 <strong>Receiver</strong><br>
             ${item.receiverName || "N/A"}</p>
 
-            <p><strong>Receiver Phone:</strong>
+            <p>☎ <strong>Receiver Phone</strong><br>
             ${item.receiverPhone || "N/A"}</p>
 
-            <p><strong>Origin:</strong>
-            ${item.origin || "N/A"}</p>
+            <p>📍 <strong>Route</strong><br>
 
-            <p><strong>Destination:</strong>
-            ${item.destination || "N/A"}</p>
+            ${item.origin || "N/A"}
 
-            <p><strong>Status:</strong>
-            ${item.status}</p>
+            <br>
 
-            <p><strong>Location:</strong>
-            ${item.location || "N/A"}</p>
+            ⬇
 
-            <p><strong>ETA:</strong>
-            ${item.eta || "N/A"}</p>
+            <br>
+
+            ${item.destination || "N/A"}
+
+            </p>
+
+            <p>📌 <strong>Current Location</strong><br>
+
+            ${item.location || "N/A"}
+
+            </p>
+
+            <p>⏰ <strong>ETA</strong><br>
+
+            ${item.eta || "N/A"}
+
+            </p>
 
             <div class="actions">
 
                 <button
                 class="edit-btn"
                 onclick="editShipment('${item.id}')">
-                Edit
+
+                ✏ Edit
+
                 </button>
 
                 <button
                 onclick="generateReceipt('${item.id}')">
-                Receipt
+
+                🧾 Receipt
+
                 </button>
 
                 <button
                 onclick="showTimeline('${item.id}')">
-                Timeline
+
+                🕒 Timeline
+
                 </button>
 
                 <button
                 class="delete-btn"
                 onclick="deleteShipment('${item.id}')">
-                Delete
+
+                🗑 Delete
+
                 </button>
 
             </div>
@@ -136,7 +184,6 @@ function renderShipments(data) {
     });
 
 }
-
 /* =========================
 CREATE SHIPMENT
 ========================= */
@@ -593,22 +640,3 @@ async function showTimeline(id) {
 
 }
 
-/* =========================
-Dashboard Clock
-========================= */
-
-function updateDashboardClock(){
-
-    const now = new Date();
-
-    document.getElementById("currentDate").innerHTML =
-        now.toLocaleDateString();
-
-    document.getElementById("currentTime").innerHTML =
-        now.toLocaleTimeString();
-
-}
-
-updateDashboardClock();
-
-setInterval(updateDashboardClock,1000);
