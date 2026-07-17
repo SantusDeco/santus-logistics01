@@ -116,8 +116,67 @@ Track Shipment
 <p>Connecting to Santus Global Network...</p>
 </div>
 
-<div id="trackingResult"></div>
+<div id="trackingResult">
+<div id="shipmentHero" class="shipment-hero hidden">
 
+    <div class="hero-left">
+
+        <h2 id="heroTrackingId">ST0000</h2>
+
+        <span id="heroStatus" class="hero-status">
+            IN TRANSIT
+        </span>
+
+    </div>
+
+    <div class="hero-right">
+
+        <div class="hero-box">
+
+            <small>Current Location</small>
+
+            <h3 id="heroLocation">Dallas</h3>
+
+        </div>
+
+        <div class="hero-box">
+
+            <small>Estimated Delivery</small>
+
+            <h3 id="heroEta">4 Days</h3>
+
+        </div>
+
+    </div>
+
+</div>
+<div class="shipment-header hidden" id="shipmentHeader">
+
+<h2 id="shipmentTitle">
+Shipment ST0000
+</h2>
+
+<span id="statusBadge" class="status-badge">
+IN TRANSIT
+</span>
+
+</div>
+
+<div class="progress-container hidden" id="progressContainer">
+
+<div class="progress-bar">
+
+<div id="progressFill"></div>
+
+</div>
+
+<p id="progressText">0%</p>
+
+</div>
+
+<div id="shipmentSummary"></div>
+
+</div>
 </div>
 
 <!-- =========================
