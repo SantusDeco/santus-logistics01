@@ -1,3 +1,5 @@
+console.log("ADMIN VERSION 17 JULY");
+console.log("ADMIN.JS LOADED");
 requireLogin();
 
 let selectedShipment = null;
@@ -213,6 +215,94 @@ onclick="viewShipmentDetails('${item.id}')">
         `;
 
     });
+
+}
+
+async function viewShipmentDetails(id){
+
+    const res = await api.get("/shipments");
+
+    const shipments = await res.json();
+
+    const shipment = shipments.find(item => item.id === id);
+
+    if(!shipment){
+
+        showToast("Shipment Not Found","error");
+
+        return;
+
+    }
+
+    document.getElementById("detailsBody").innerHTML = `
+
+    <p><strong>🚚 Tracking ID:</strong> ${shipment.id}</p>
+
+    <hr>
+
+    <p><strong>👤 Customer:</strong> ${shipment.customerName || "N/A"}</p>
+
+    <p><strong>📞 Customer Phone:</strong> ${shipment.customerPhone || "N/A"}</p>
+
+    <hr>
+
+    <p><strong>📦 Receiver:</strong> ${shipment.receiverName || "N/A"}</p>
+
+    <p><strong>☎ Receiver Phone:</strong> ${shipment.receiverPhone || "N/A"}</p>
+
+    <hr>
+
+    <p><strong>📍 Origin:</strong> ${shipment.origin || "N/A"}</p>
+
+    <p><strong>🎯 Destination:</strong> ${shipment.destination || "N/A"}</p>
+
+    <p><strong>📌 Current Location:</strong> ${shipment.location || "N/A"}</p>
+
+    <hr>
+
+    <p><strong>📅 Shipment Date:</strong> ${shipment.shipmentDate || "N/A"}</p>
+
+    <p><strong>⚖ Weight:</strong> ${shipment.weight || "N/A"} KG</p>
+
+    <p><strong>🚚 Shipping Method:</strong> ${shipment.shippingMethod || "N/A"}</p>
+
+    <p><strong>📦 Package Type:</strong> ${shipment.packageType || "N/A"}</p>
+
+    <p><strong>💳 Payment Status:</strong> ${shipment.paymentStatus || "N/A"}</p>
+
+    <hr>
+
+    <p><strong>📝 Description:</strong></p>
+
+    <p>${shipment.description || "N/A"}</p>
+
+    <hr>
+
+    <p><strong>⏰ ETA:</strong> ${shipment.eta || "N/A"}</p>
+
+    <p><strong>📊 Status:</strong> ${shipment.status}</p>
+
+    `;
+
+    document.getElementById("detailsModal").style.display = "block";
+
+}
+
+function closeShipmentDetails(){
+
+    document.getElementById("detailsModal").style.display = "none";
+
+}
+
+window.onclick = function(event){
+
+    const modal = document.getElementById("detailsModal");
+
+    if(event.target === modal){
+
+        modal.style.display = "none";
+
+    }
 
 }
 /* =========================
