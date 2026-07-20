@@ -154,11 +154,49 @@ Waiting...
 </div>
 
     <!-- Shipment Information -->
-    <div id="shipmentSummary"></div>
+<div id="shipmentSummary"></div>
+
+<!-- =========================
+     SHIPMENT STATISTICS
+========================= -->
+<div id="shipmentStats" class="shipment-stats hidden">
+
+    <div class="stat-card">
+        <span class="stat-icon">📦</span>
+        <h3 id="statWeight">0 KG</h3>
+        <p>Weight</p>
+    </div>
+
+    <div class="stat-card">
+        <span class="stat-icon">✈️</span>
+        <h3 id="statMethod">Air Freight</h3>
+        <p>Shipping Method</p>
+    </div>
+
+    <div class="stat-card">
+        <span class="stat-icon">📅</span>
+        <h3 id="statEta">0 Days</h3>
+        <p>Estimated Delivery</p>
+    </div>
+
+    <div class="stat-card">
+        <span class="stat-icon">💳</span>
+        <h3 id="statPayment">Pending</h3>
+        <p>Payment Status</p>
+    </div>
 
 </div>
 
+<!-- =========================
+     SHIPMENT ACTIVITY
+========================= -->
+<div id="shipmentActivity" class="shipment-activity hidden">
 
+    <h2>📦 Shipment Activity</h2>
+
+    <div id="activityList"></div>
+
+</div>
 <!-- =========================
      TIMELINE
 ========================= -->

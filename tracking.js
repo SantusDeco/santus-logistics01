@@ -42,9 +42,11 @@ async function trackShipment() {
         step.classList.remove("active");
     });
 
+if (truck) {
+
     truck.style.left = "0%";
 
-    resultBox.innerHTML = "";
+}
 
     loading.classList.remove("hidden");
 
@@ -79,19 +81,23 @@ async function trackShipment() {
         /* =========================
            PREMIUM RESULT CARD
         ========================== */
-
-        resultBox.innerHTML = `
-
+console.log("shipmentSummary =", document.getElementById("shipmentSummary"));
+document.getElementById("shipmentSummary").innerHTML = `
 <div class="result-card premium-result">
 
 <div class="shipment-header">
 
 <h2>Shipment Located</h2>
 
-<span class="status-badge">
+<span class="status-badge ${
+data.status === "Warehouse Processing" ? "status-processing" :
+data.status === "Custom Clearance" ? "status-customs" :
+data.status === "In Transit" ? "status-transit" :
+data.status === "Out For Delivery" ? "status-delivery" :
+data.status === "Delivered" ? "status-delivered" : ""
+}">
 ${data.status}
 </span>
-
 </div>
 
 <div class="shipment-grid">
@@ -260,9 +266,11 @@ steps.forEach(step=>step.classList.add("active"));
 break;
 
 }
-document
-.getElementById("progressFill")
-.style.width = progress + "%";
+console.log("progressFill =", document.getElementById("progressFill"));
+console.log("progressText =", document.getElementById("progressText"));
+console.log("progressStage =", document.getElementById("progressStage"));
+console.log("progressContainer =", document.getElementById("progressContainer"));
+document.getElementById("progressFill").style.width = progress + "%";
 
 document
 .getElementById("progressText")
@@ -276,11 +284,71 @@ document
 .getElementById("progressContainer")
 .classList.remove("hidden");
 
-        truck.style.left = progress + "%";
 
-    }
+// =========================
+// SHOW LIVE SHIPMENT STATS
+// =========================
 
-    catch (error) {
+document.getElementById("shipmentStats")
+.classList.remove("hidden");
+
+document.getElementById("statWeight")
+.textContent = (data.weight || "N/A") + " KG";
+
+document.getElementById("statMethod")
+.textContent = data.shippingMethod || "N/A";
+
+document.getElementById("statEta")
+.textContent = data.eta || "N/A";
+
+document.getElementById("statPayment")
+.textContent = data.paymentStatus || "N/A";
+
+/* =========================
+   SHIPMENT ACTIVITY
+========================= */
+
+const activityList = document.getElementById("activityList");
+
+document.getElementById("shipmentActivity")
+.classList.remove("hidden");
+
+activityList.innerHTML = `
+<div class="activity-item">
+    <div class="activity-icon">✓</div>
+    <div class="activity-content">
+        <h4>Shipment Created</h4>
+        <p>Your shipment has been registered in the Santus Logistics system.</p>
+        <small>${data.shipmentDate || "N/A"}</small>
+    </div>
+</div>
+
+<div class="activity-item">
+    <div class="activity-icon">📦</div>
+    <div class="activity-content">
+        <h4>Current Status</h4>
+        <p>${data.status}</p>
+        <small>${data.location || "Unknown Location"}</small>
+    </div>
+</div>
+
+<div class="activity-item">
+    <div class="activity-icon">🚚</div>
+    <div class="activity-content">
+        <h4>Estimated Delivery</h4>
+        <p>Your shipment is expected to arrive within ${data.eta || "N/A"}.</p>
+        <small>${data.destination || "Destination"}</small>
+    </div>
+</div>
+`;
+       if (truck) {
+
+    truck.style.left = progress + "%";
+
+}
+
+} catch(error){
+console.error(error);
 
         loading.classList.add("hidden");
 
