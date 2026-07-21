@@ -21,55 +21,80 @@ function myFunction(){
   vehicle.classList.add("drive");
 }
 
-//////////////////////////////
-// PREMIUM COUNTERS
-//////////////////////////////
-const counters = document.querySelectorAll(".sub");
+////////////////////////////////
+// PREMIUM STATS COUNTER
+////////////////////////////////
+
+const counters = document.querySelectorAll(".counter");
+
 let counterStarted = false;
 
 function animateCounter(counter){
-  const target = +counter.dataset.value;
-  let count = 0;
 
-  const duration = 2000;
-  const stepTime = Math.max(10, Math.floor(duration / target));
+const target = Number(counter.dataset.target);
 
-  const timer = setInterval(() => {
-    count++;
-    counter.textContent = count;
+let count = 0;
 
-    if(count >= target){
-      clearInterval(timer);
-      counter.textContent = target;
-    }
-  }, stepTime);
+const increment = Math.max(1,target/120);
+
+function update(){
+
+if(count < target){
+
+count += increment;
+
+counter.innerText = Math.ceil(count).toLocaleString();
+
+requestAnimationFrame(update);
+
+}else{
+
+counter.innerText = target.toLocaleString();
+
+}
+
+}
+
+update();
+
 }
 
 function startCounters(){
-  if(counterStarted) return;
-  counterStarted = true;
 
-  counters.forEach(counter => animateCounter(counter));
+if(counterStarted) return;
+
+counterStarted = true;
+
+counters.forEach(counter=>animateCounter(counter));
+
 }
 
-//////////////////////////////
-// SCROLL TRIGGER (PRO VERSION)
-//////////////////////////////
-const trigger = document.querySelector(".second-container");
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting){
-      startCounters();
-    }
-  });
-}, {
-  threshold: 0.4
-});
+const trigger = document.querySelector(".stats-section");
 
 if(trigger){
-  observer.observe(trigger);
+
+const observer = new IntersectionObserver((entries)=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+startCounters();
+
 }
+
+});
+
+},{
+
+threshold:.35
+
+});
+
+observer.observe(trigger);
+
+}
+
 
 // FAKE DATABASE
 const trackingDB = {
@@ -169,4 +194,45 @@ document.getElementById("result").classList.remove("hidden");
 
 },1200);
 }
+
+// NEWSLETTER
+
+const newsletterForm=document.querySelector(".newsletter-form");
+
+if(newsletterForm){
+
+newsletterForm.addEventListener("submit",(e)=>{
+
+e.preventDefault();
+
+alert("🎉 Thank you for subscribing to Santus Logistics!");
+
+newsletterForm.reset();
+
+});
+
+}
+
+/////////////////////////////////
+// BACK TO TOP
+/////////////////////////////////
+
+const back=document.getElementById("backToTop");
+
+if(back){
+
+back.addEventListener("click",()=>{
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+});
+
+}
+
 
